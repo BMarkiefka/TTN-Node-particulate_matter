@@ -19,10 +19,10 @@ This sketch will send Battery Voltage (in mV), Temperature (in Celsius), Humidit
 
 The Application will 'sleep' 75x8 seconds (10 minutes) and then run the SDS011 sensor for 30 seconds to get a good reading on the pm2.5 and pm10 count. You can adjust those sleep and uptimes with the variables
 
-'''c++
+```c++
 int sleepcycles = 75;
 #define sdsSamples 30
-'''
+```
 
 This uses OTAA (Over-the-air activation), where where a DevEUI and application key is configured, which are used in an over-the-air activation procedure where a DevAddr and session keys are assigned/generated for use with all further communication.
 
@@ -30,9 +30,9 @@ To use this sketch, first register your application and device with The Things N
 
 In the payload function change the decode function, by adding the code from https://github.com/thesolarnomad/lora-serialization/blob/master/src/decoder.js to the function right below the "function Decoder(bytes, port) {" and delete everything below exept the last "}". Right before the last line add this code
 
-'''c++
+```c++
 return decode(bytes, [uint16, uint16, uint16, temperature, humidity], ['battery', 'pm25', 'pm10', 'temp', 'humi']);
-'''
+```
 
 and you get a json containing the stats for battery, pm25, pm10, temp and humi.
 
