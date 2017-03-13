@@ -1,6 +1,8 @@
 Code for a particulate matter sensor based on hardware which is a crossover from the loratracker node workshop and luftdaten.info
+=================================================================================================================================
 
 Code adapted from the Node Building Workshop using a modified LoraTracker board
+-------------------------------------------------------------------------------
 
 Copyright (c) 2015 Thomas Telkamp and Matthijs Kooijman
 
@@ -30,7 +32,7 @@ To use this sketch, first register your application and device with The Things N
 
 In the payload function change the decode function, by adding the code from https://github.com/thesolarnomad/lora-serialization/blob/master/src/decoder.js to the function right below the "function Decoder(bytes, port) {" and delete everything below exept the last "}". Right before the last line add this code
 
-```c++
+```javascript
 return decode(bytes, [uint16, uint16, uint16, temperature, humidity], ['battery', 'pm25', 'pm10', 'temp', 'humi']);
 ```
 
