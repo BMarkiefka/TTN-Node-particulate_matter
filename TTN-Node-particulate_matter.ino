@@ -16,7 +16,7 @@
  * NO WARRANTY OF ANY KIND IS PROVIDED.
  *
  * This sketch will send Battery Voltage (in mV), Temperature (in Celsius),
- * Humidity (in %) and PM10/PM2.5 counts using the lora-serialization library 
+ * Humidity (in %) and PM10/PM2.5 counts using the lora-serialization library, 
  * matching setttings have to be added to the payload decoder funtion in the
  * The Things Network console/backend.
  * 
@@ -83,14 +83,14 @@ int port = 4;
 // the bytes. For TTN issued EUIs the last bytes should be 0xD5, 0xB3,
 // 0x70.
  
-static const u1_t DEVEUI[8]  = { 0xF4, 0x7A, 0x1F, 0x0D, 0x06, 0x79, 0x0A, 0x00 };
-static const u1_t APPEUI[8] = { 0x9B, 0x14, 0x00, 0xD0, 0x7E, 0xD5, 0xB3, 0x70 };
+static const u1_t DEVEUI[8]  = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+static const u1_t APPEUI[8] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 
 // This key should be in big endian format (or, since it is not really a
 // number but a block of memory, endianness does not really apply). In
 // practice, a key taken from ttnctl can be copied as-is.
 // The key shown here is the semtech default key.
-static const u1_t APPKEY[16] = { 0x0D, 0xEC, 0xA2, 0xCC, 0xC9, 0x1E, 0xA8, 0x7E, 0xA6, 0x34, 0xC7, 0x4B, 0xCE, 0x67, 0x40, 0xB8 };
+static const u1_t APPKEY[16] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 
 // provide APPEUI (8 bytes, LSBF)
 void os_getArtEui (u1_t* buf) {
