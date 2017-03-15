@@ -44,11 +44,11 @@ Hardware:
 
 To build the node please follow the exellent labs story from Frank on TTN (https://www.thethingsnetwork.org/labs/story/workshop-creating-a-ttn-node) but skip all the sensors. Instead connect a AM2302 to Pin 7 and the SDS011 to Pins 12 & 13 and the PDWN from the Pololu StepUp U1V11F5 to Pin 6. Now make sure you have all the grounds together and the power (3.3V) everywhere it is needed. Don't forget the power (5V) from the StepUp to the SDS011. Have a look at the following picture to see all the components connected, exept the solar panel for which you need a adapter cable to connect it to the adafruit solar controller.
 
-![Hardware assembled](https://github.com/Freifunk-Hennef/TTN-Node-particulate_matter/tree/master/images/ttn_node_pm001.jpg "Hardware assembled")
+![Hardware assembled](https://raw.githubusercontent.com/Freifunk-Hennef/TTN-Node-particulate_matter/master/images/ttn_node_pm001.jpg "Hardware assembled")
 
 Together with some 6mm hose and 2 75mm 87° tubes you can build a very compact and water proof case.
 
-![Hardware assembled](https://github.com/Freifunk-Hennef/TTN-Node-particulate_matter/tree/master/images/ttn_node_pm002.jpg "Hardware assembled")
+![Hardware assembled](https://raw.githubusercontent.com/Freifunk-Hennef/TTN-Node-particulate_matter/master/images/ttn_node_pm002.jpg "Hardware assembled")
 
 Links:
 ------
