@@ -11,6 +11,7 @@ Copyright (c) 2017 Caspar Armster for the modifications concerning
 - the battery voltage measurement
 - integration of the lora-serialization library
 - the Pololu 5V StepUp U1V11F5 support
+- integration of the adafruit solar controller and the solar panel
  
 Permission is hereby granted, free of charge, to anyone obtaining a copy of this document and accompanying files, to do whatever they want with them without any restriction, including, but not limited to, copying, modification and redistribution.
 
@@ -37,6 +38,17 @@ return decode(bytes, [uint16, uint16, uint16, temperature, humidity], ['battery'
 ```
 
 and you get a json containing the stats for battery, pm25, pm10, temp and humi.
+
+Hardware:
+---------
+
+To build the node please follow the exellent labs story from Frank on TTN (https://www.thethingsnetwork.org/labs/story/workshop-creating-a-ttn-node) but skip all the sensors. Instead connect a AM2302 to Pin 7 and the SDS011 to Pins 12 & 13 and the PDWN from the Pololu StepUp U1V11F5 to Pin 6. Now make sure you have all the grounds together and the power (3.3V) everywhere it is needed. Don't forget the power (5V) from the StepUp to the SDS011. Have a look at the following picture to see all the components connected, exept the solar panel for which you need a adapter cable to connect it to the adafruit solar controller.
+
+![Hardware assembled](https://github.com/Freifunk-Hennef/TTN-Node-particulate_matter/images/ttn_node_pm001.jpg "Hardware assembled")
+
+Together with some 6mm hose and 2 75mm 87° tubes you can build a very compact and water proof case.
+
+![Hardware assembled](https://github.com/Freifunk-Hennef/TTN-Node-particulate_matter/images/ttn_node_pm002.jpg "Hardware assembled")
 
 Links:
 ------
