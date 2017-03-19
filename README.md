@@ -47,7 +47,7 @@ Node-RED
 
 To connect your sensor to the luftdaten.info map you can run your data through a Node-RED installation. Node-RED needs the "The Things Network Node-RED Nodes"-Package from this site: https://www.npmjs.com/package/node-red-contrib-ttn
 
-![Hardware assembled](https://raw.githubusercontent.com/Freifunk-Hennef/TTN-Node-particulate_matter/master/images/Node-RED_screenshot001.jpg "Hardware assembled")
+![Hardware assembled](https://raw.githubusercontent.com/Freie-Netzwerker/TTN-Node-particulate_matter/master/images/Node-RED_screenshot001.jpg "Hardware assembled")
 
 Now build a flow with the "ttn message" node first (tell the node your application id, device id), connect this to a function node and use the following code, replace "TTN-Hennef-" and "TTN-Hennef-v1" with the credentials from your community:
 
@@ -66,26 +66,26 @@ msg.payload = {
 return msg;
 ```
 
-![Hardware assembled](https://raw.githubusercontent.com/Freifunk-Hennef/TTN-Node-particulate_matter/master/images/Node-RED_screenshot002.jpg "Hardware assembled")
+![Hardware assembled](https://raw.githubusercontent.com/Freie-Netzwerker/TTN-Node-particulate_matter/master/images/Node-RED_screenshot002.jpg "Hardware assembled")
 
 Now connect a "http request"-node to your flow and set the Method to "POST" and the URL to "http://api.luftdaten.info/v1/push-sensor-data/" and you are set.
 
-![Hardware assembled](https://raw.githubusercontent.com/Freifunk-Hennef/TTN-Node-particulate_matter/master/images/Node-RED_screenshot003.jpg "Hardware assembled")
+![Hardware assembled](https://raw.githubusercontent.com/Freie-Netzwerker/TTN-Node-particulate_matter/master/images/Node-RED_screenshot003.jpg "Hardware assembled")
 
 If your sensor does take longer breaks than 5 minutes between the data transmissions, you should proxy the data and send it in an intervall shorter than 5 minutes again, else your sensor will not be visible on the map all the time. In my example the sensor is sending every 12 minutes (brutto = pause + sensor reading + transmitting), so i send the data again after 4 minutes and after 8 minutes, to have no gap longer than 5 minutes. You can best use the "delay"-node and split the flow:
 
-![Hardware assembled](https://raw.githubusercontent.com/Freifunk-Hennef/TTN-Node-particulate_matter/master/images/Node-RED_screenshot003.jpg "Hardware assembled")
+![Hardware assembled](https://raw.githubusercontent.com/Freie-Netzwerker/TTN-Node-particulate_matter/master/images/Node-RED_screenshot004.jpg "Hardware assembled")
 
 Hardware:
 ---------
 
 To build the node please follow the excellent labs story from Frank on TTN (https://www.thethingsnetwork.org/labs/story/workshop-creating-a-ttn-node) but skip all the sensors. Instead connect a AM2302 to Pin 7 and the SDS011 to Pins 12 & 13 and the PDWN from the Pololu StepUp U1V11F5 to Pin 6. Now make sure you have all the grounds together and the power (3.3V) everywhere it is needed. Don't forget the power (5V) from the StepUp to the SDS011. Have a look at the following picture to see all the components connected, except the solar panel for which you need an adapter cable to connect it to the adafruit solar controller.
 
-![Hardware assembled](https://raw.githubusercontent.com/Freifunk-Hennef/TTN-Node-particulate_matter/master/images/ttn_node_pm001.jpg "Hardware assembled")
+![Hardware assembled](https://raw.githubusercontent.com/Freie-Netzwerker/TTN-Node-particulate_matter/master/images/ttn_node_pm001.jpg "Hardware assembled")
 
 Together with some 6mm hose and 2 75mm 87° tubes you can build a very compact and water proof case.
 
-![Hardware assembled](https://raw.githubusercontent.com/Freifunk-Hennef/TTN-Node-particulate_matter/master/images/ttn_node_pm002.jpg "Hardware assembled")
+![Hardware assembled](https://raw.githubusercontent.com/Freie-Netzwerker/TTN-Node-particulate_matter/master/images/ttn_node_pm002.jpg "Hardware assembled")
 
 Part list
 ---------
