@@ -55,7 +55,7 @@
 
 #include "DHT.h"
 #define DHTPIN 7
-#define DHTTYPE DHT22     // DHT 22  (AM2302), AM2321
+#define DHTTYPE DHT22     // DHT 22 (AM2302), AM2321
 DHT dht(DHTPIN, DHTTYPE);
 
 #include <SoftwareSerial.h>
@@ -83,7 +83,7 @@ int port = 4;
 // the bytes. For TTN issued EUIs the last bytes should be 0xD5, 0xB3,
 // 0x70.
  
-static const u1_t DEVEUI[8]  = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+static const u1_t DEVEUI[8] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 static const u1_t APPEUI[8] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 
 // This key should be in big endian format (or, since it is not really a
@@ -250,8 +250,8 @@ void loop_sds() {
             checksum = checksum + buf[i];
           }
           if (checksum == buf[7]) {
-            PM25Sample[j]=((buf[2]<<8) + buf[1])/10;
-            PM10Sample[j]=((buf[4]<<8) + buf[3])/10;
+            PM25Sample[j]=((buf[2]<<8) + buf[1]); // samples are 10 times to high, will be corrected in the TTN decode function
+            PM10Sample[j]=((buf[4]<<8) + buf[3]); // see above
           }
           else {
             Serial.println("SDS011 checksum Error");
@@ -350,8 +350,8 @@ void loop()
       os_runloop_once();
     }
     sleeping = false;
-    for (int i=0;i<sleepcycles;i++) {
-      LowPower.powerDown(SLEEP_8S, ADC_OFF, BOD_OFF);           //sleep 8 seconds
+    for (int i=0;i<sleepcycles;i++) {                           // sleep sleepcycles times for
+      LowPower.powerDown(SLEEP_8S, ADC_OFF, BOD_OFF);           // 8 seconds
     }
   }
   digitalWrite(LedPin,((millis()/100) % 2) && (joined==false)); // only blinking when joining and not sleeping
