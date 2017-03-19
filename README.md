@@ -34,10 +34,43 @@ To use this sketch, first register your application and device with The Things N
 In the payload function change the decode function, by adding the code from https://github.com/thesolarnomad/lora-serialization/blob/master/src/decoder.js to the function right below the "function Decoder(bytes, port) {" and delete everything below exept the last "}". Right before the last line add this code
 
 ```javascript
-return decode(bytes, [uint16, uint16, uint16, temperature, humidity], ['battery', 'pm25', 'pm10', 'temp', 'humi']);
+var values = decode(bytes, [uint16, uint16, uint16, temperature, humidity], ['battery', 'pm25', 'pm10', 'temp', 'humi']);
+values["pm25"] = values["pm25"]/10;
+values["pm10"] = values["pm10"]/10;
+return values;
 ```
 
 and you get a json containing the stats for battery, pm25, pm10, temp and humi.
+
+Node-RED
+--------
+
+To connect your sensor to the luftdaten.info map you can run your data through a Node-RED installation. Node-RED needs the "The Things Network Node-RED Nodes"-Package from this site: https://www.npmjs.com/package/node-red-contrib-ttn
+
+![Hardware assembled](https://raw.githubusercontent.com/Freifunk-Hennef/TTN-Node-particulate_matter/master/images/Node-RED_screenshot001.jpg "Hardware assembled")
+
+Now build a flow with the "ttn message" node first (tell the node your application id, device id), connect this to a function node and use the following code, replace "TTN-Hennef-" and "TTN-Hennef-v1" with the credentials from your community:
+
+```javascript
+msg.headers = {
+    "X-Pin": "1",
+    "X-Sensor": "TTNHennef-" + parseInt(msg["hardware_serial"], 16)
+};
+msg.payload = {
+    "software_version": "TTNHennef-v1",
+    "sensordatavalues": [
+        {"value_type": "P1", "value": parseFloat(msg.payload_fields["pm10"])},
+        {"value_type": "P2", "value": parseFloat(msg.payload_fields["pm25"])}
+    ]
+};
+return msg;
+```
+
+![Hardware assembled](https://raw.githubusercontent.com/Freifunk-Hennef/TTN-Node-particulate_matter/master/images/Node-RED_screenshot002.jpg "Hardware assembled")
+
+Now connect a "http request"-node to your flow and set the Method to "POST" and the URL to "http://api.luftdaten.info/v1/push-sensor-data/" and you are set.
+
+![Hardware assembled](https://raw.githubusercontent.com/Freifunk-Hennef/TTN-Node-particulate_matter/master/images/Node-RED_screenshot003.jpg "Hardware assembled")
 
 Hardware:
 ---------
@@ -49,6 +82,35 @@ To build the node please follow the exellent labs story from Frank on TTN (https
 Together with some 6mm hose and 2 75mm 87° tubes you can build a very compact and water proof case.
 
 ![Hardware assembled](https://raw.githubusercontent.com/Freifunk-Hennef/TTN-Node-particulate_matter/master/images/ttn_node_pm002.jpg "Hardware assembled")
+
+Part list
+---------
+
+- Arduino Pro Mini 3.3V / 8Mhz (5V will not work)
+- RFM Module RFM95W (868 Mhz)
+- FT232RL-3.3v-5v-TTL-USB-Serial-Port-Adapter (has to have a 3.3V option!)
+- USB cable for FTDI
+- 1x Led 3mm red
+- 1x resistor 1k (brown-black-red)
+- 1x resistor 4k7 (yellow-violet-red)
+- 1x resistor 10k (brown-black-orange)
+- 1x resistor 100k (brown-black-yellow)
+- Header 6p female (Arduino programming)
+- Header 4p female (sensor)
+- Header 4p male 90 degrees (gps / optional) (cut 2p from the header included with the Pro Mini)
+- PCB ‘Loratracker RFM98 including special headers (2x 8p 2mm, 2x 12p 2.54mm, 1x 2p 2.54mm) for RFM and Arduino
+- SDS011 pm10 & pm2.5 sensor
+- AM2302 sensor
+- 1x resistor 4k7 (yellow-violet-red)
+- Popolu 5V StepUp U1V11F5
+- Adafruit USB / DC / Solar Lithium Ion/Polymer charger - v2
+- Lithium Ion Battery Pack - 3.7V 6600mAh
+- Medium 6V 2W Solar panel - 2.0 Watt
+- 3.5 / 1.3mm or 3.8 / 1.1mm to 5.5 / 2.1mm DC Jack Adapter Cable
+- bunch of cables
+- cable ties
+- 6mm hose
+- 2x Marley Silent HT Bogen (DN 75 87°)
 
 Links:
 ------
