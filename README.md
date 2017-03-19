@@ -18,7 +18,7 @@ Permission is hereby granted, free of charge, to anyone obtaining a copy of this
 NO WARRANTY OF ANY KIND IS PROVIDED.
 ------------------------------------
 
-This sketch will send Battery Voltage (in mV), Temperature (in Celsius), Humidity (in %) and PM10/PM2.5 counts using the lora-serialization library matching setttings have to be added to the payload decoder funtion in the The Things Network console/backend.
+This sketch will send Battery Voltage (in mV), Temperature (in Celsius), Humidity (in %) and PM10/PM2.5 counts using the lora-serialization library matching settings have to be added to the payload decoder function in the The Things Network console/backend.
 
 The Application will 'sleep' 75x8 seconds (10 minutes) and then run the SDS011 sensor for 30 seconds to get a good reading on the pm2.5 and pm10 count. You can adjust those sleep and uptimes with the variables
 
@@ -31,7 +31,7 @@ This uses OTAA (Over-the-air activation), where where a DevEUI and application k
 
 To use this sketch, first register your application and device with The Things Network, to set or generate an AppEUI, DevEUI and AppKey. Multiple devices can use the same AppEUI, but each device has its own DevEUI and AppKey. Do not forget to adjust the payload decoder function.
 
-In the payload function change the decode function, by adding the code from https://github.com/thesolarnomad/lora-serialization/blob/master/src/decoder.js to the function right below the "function Decoder(bytes, port) {" and delete everything below exept the last "}". Right before the last line add this code
+In the payload function change the decode function, by adding the code from https://github.com/thesolarnomad/lora-serialization/blob/master/src/decoder.js to the function right below the "function Decoder(bytes, port) {" and delete everything below except the last "}". Right before the last line add this code
 
 ```javascript
 var values = decode(bytes, [uint16, uint16, uint16, temperature, humidity], ['battery', 'pm25', 'pm10', 'temp', 'humi']);
@@ -72,10 +72,14 @@ Now connect a "http request"-node to your flow and set the Method to "POST" and 
 
 ![Hardware assembled](https://raw.githubusercontent.com/Freifunk-Hennef/TTN-Node-particulate_matter/master/images/Node-RED_screenshot003.jpg "Hardware assembled")
 
+If your sensor does take longer breaks than 5 minutes between the data transmissions, you should proxy the data and send it in an intervall shorter than 5 minutes again, else your sensor will not be visible on the map all the time. In my example the sensor is sending every 12 minutes (brutto = pause + sensor reading + transmitting), so i send the data again after 4 minutes and after 8 minutes, to have no gap longer than 5 minutes. You can best use the "delay"-node and split the flow:
+
+![Hardware assembled](https://raw.githubusercontent.com/Freifunk-Hennef/TTN-Node-particulate_matter/master/images/Node-RED_screenshot003.jpg "Hardware assembled")
+
 Hardware:
 ---------
 
-To build the node please follow the exellent labs story from Frank on TTN (https://www.thethingsnetwork.org/labs/story/workshop-creating-a-ttn-node) but skip all the sensors. Instead connect a AM2302 to Pin 7 and the SDS011 to Pins 12 & 13 and the PDWN from the Pololu StepUp U1V11F5 to Pin 6. Now make sure you have all the grounds together and the power (3.3V) everywhere it is needed. Don't forget the power (5V) from the StepUp to the SDS011. Have a look at the following picture to see all the components connected, exept the solar panel for which you need a adapter cable to connect it to the adafruit solar controller.
+To build the node please follow the excellent labs story from Frank on TTN (https://www.thethingsnetwork.org/labs/story/workshop-creating-a-ttn-node) but skip all the sensors. Instead connect a AM2302 to Pin 7 and the SDS011 to Pins 12 & 13 and the PDWN from the Pololu StepUp U1V11F5 to Pin 6. Now make sure you have all the grounds together and the power (3.3V) everywhere it is needed. Don't forget the power (5V) from the StepUp to the SDS011. Have a look at the following picture to see all the components connected, except the solar panel for which you need an adapter cable to connect it to the adafruit solar controller.
 
 ![Hardware assembled](https://raw.githubusercontent.com/Freifunk-Hennef/TTN-Node-particulate_matter/master/images/ttn_node_pm001.jpg "Hardware assembled")
 
@@ -98,7 +102,7 @@ Part list
 - Header 6p female (Arduino programming)
 - Header 4p female (sensor)
 - Header 4p male 90 degrees (gps / optional) (cut 2p from the header included with the Pro Mini)
-- PCB ‘Loratracker RFM98 including special headers (2x 8p 2mm, 2x 12p 2.54mm, 1x 2p 2.54mm) for RFM and Arduino
+- PCB Loratracker RFM98 including special headers (2x 8p 2mm, 2x 12p 2.54mm, 1x 2p 2.54mm) for RFM and Arduino
 - SDS011 pm10 & pm2.5 sensor
 - AM2302 sensor
 - 1x resistor 4k7 (yellow-violet-red)
